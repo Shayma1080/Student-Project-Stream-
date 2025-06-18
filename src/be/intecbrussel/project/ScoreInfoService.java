@@ -6,59 +6,62 @@ import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Nodes.collect;
+
 public class ScoreInfoService {
 
-    private ScoreInfo[] scoreData;
+    private List<ScoreInfo> scoreData= new ArrayList<>();
     long numberOfStudents;
 
     public ScoreInfoService() {}
 
     public void addScoreInfo(ScoreInfo newScore) {
-        scoreData = Stream.concat(Arrays.stream(scoreData), Stream.of(newScore))
-                .toArray(ScoreInfo[]::new);
-        numberOfStudents++;
-        System.out.println(Arrays.toString(scoreData));
+        scoreData.add(ScoreInfo);
+        scoreData.stream()
+                .filter(e -> e.student && e.score)
+                .forEach(e -> System.out.println(e));
+
     }
 
     public void calculateAverageScore(){
-        double average = Arrays.stream(scoreData)
-                .mapToDouble(ScoreInfo::getScore)
+        scoreData.stream()
+                .mapToDouble(Double::intValue)
                 .average()
-                .collect(Collection.toList);
-        System.out.println(average);
+                .orElse(0.0)
+                .toList;
     }
 
     public long filterScore(){
-        return Arrays.stream(scoreData)
-                .filter(getscore-> getscore >=90)
-                .contain("A")
+        return scoreData.stream()
+                .filter(s-> s.getScore() >=90)
+                .map(e -> e.student)
                 .count();
     }
 
     private String[] getFailingStudents(){
-        return Arrays.stream(scoreData)
-                .toArray(getScoreData() < 60 && getDataSortedByLastName())
+        return scoreData.stream()
+                .filter(s-> s.getScore() < 60)
+                .map(String::Student)
                 .toList;
     }
 
     public void printFailingStudents(){
-        String namen = Arrays.stream()
-                .filter((Student) -> Student)
-                .toList();
-        System.out.println(namen);
+        scoreData.stream()
+                .toArray((String::Student))
+                .collect(Collection.toList)
+                .toList;
     }
 
     public void getDataSortedByLastName(){
-        scoreData = Arrays.stream()
-                .filer((Student,ScoreInfo) -> Student + ScoreInfo)
-                .contain(getDataSortedByLastName());
-        System.out.println(scoreData);
+        scoreData.stream()
+                .map(e -> e.student)
+                .forEach(e -> System.out.println(e));
     }
 
     public void getDataSortedByScore(){
-        scoreData = Arrays.stream()
-                .filer((Student,ScoreInfo) -> Student + ScoreInfo)
-                .map(Arrays.stream(scoreData).distinct());
+        scoreData.stream()
+                .map(e -> e.score)
+                .forEach(e -> System.out.println(e));
     }
 
     public ScoreInfo[] getScoreData() {
