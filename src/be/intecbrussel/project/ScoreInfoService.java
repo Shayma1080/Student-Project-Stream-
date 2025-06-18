@@ -16,19 +16,19 @@ public class ScoreInfoService {
     public ScoreInfoService() {}
 
     public void addScoreInfo(ScoreInfo newScore) {
-        scoreData.add(ScoreInfo);
+        scoreData.add(newScore);
         scoreData.stream()
-                .filter(e -> e.student && e.score)
                 .forEach(e -> System.out.println(e));
 
     }
 
     public void calculateAverageScore(){
-        scoreData.stream()
-                .mapToDouble(Double::intValue)
+        double gemiddelde = scoreData.stream()
+                .mapToDouble(ScoreInfo::getScore)
                 .average()
-                .orElse(0.0)
-                .toList;
+                .orElse(0.0);
+
+        System.out.println("Gemiddelde score is : " + gemiddelde);
     }
 
     public long filterScore(){
@@ -39,10 +39,10 @@ public class ScoreInfoService {
     }
 
     private String[] getFailingStudents(){
-        return scoreData.stream()
+        return Arrays.stream(scoreData)
                 .filter(s-> s.getScore() < 60)
-                .map(String::Student)
-                .toList;
+                .map(ScoreInfo::getStudentName)
+                .toArray(String[]::new);
     }
 
     public void printFailingStudents(){

@@ -16,6 +16,10 @@ public class Student extends Person{
         return  id +=incrementId;
     }
 
+    public static int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Student{}";
