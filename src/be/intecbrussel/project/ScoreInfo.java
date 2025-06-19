@@ -17,10 +17,7 @@ public class ScoreInfo {
 
     @Override
     public String toString() {
-        return "ScoreInfo{" +
-                "score=" + score +
-                ", student=" + student +
-                '}';
+        return "score=" + score + ", student=" + student;
     }
 
 }

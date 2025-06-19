@@ -6,9 +6,8 @@ import java.util.List;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Nodes.collect;
 
-public class ScoreInfoService {
+public class ScoreInfoService extends Person{
 
     private List<ScoreInfo> scoreData= new ArrayList<>();
     long numberOfStudents;
@@ -18,6 +17,7 @@ public class ScoreInfoService {
     public void addScoreInfo(ScoreInfo newScore) {
         scoreData.add(newScore);
         scoreData.stream()
+                //.map(Person::getName())
                 .forEach(e -> System.out.println(e));
 
     }
@@ -39,17 +39,17 @@ public class ScoreInfoService {
     }
 
     private String[] getFailingStudents(){
-        return Arrays.stream(scoreData)
+        return scoreData.stream()
                 .filter(s-> s.getScore() < 60)
-                .map(ScoreInfo::getStudentName)
+                .map(s->s.student.getName().toString())
                 .toArray(String[]::new);
     }
 
     public void printFailingStudents(){
-        scoreData.stream()
-                .toArray((String::Student))
-                .collect(Collection.toList)
-                .toList;
+        String[] studenten = getFailingStudents();
+        for( String namen: studenten){
+            System.out.println("Niet-geslaagd: " + namen);
+        }
     }
 
     public void getDataSortedByLastName(){
@@ -65,10 +65,21 @@ public class ScoreInfoService {
     }
 
     public ScoreInfo[] getScoreData() {
-        return scoreData;
+        return scoreData.toArray(new ScoreInfo[100]);
     }
+    //return scoreData.toArray(new ScoreInfo[0])
 
     public long getNumberOfStudents() {
         return numberOfStudents;
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
     }
 }
