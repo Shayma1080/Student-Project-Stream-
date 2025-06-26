@@ -15,6 +15,10 @@ public class ScoreInfo {
         return score;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
     @Override
     public String toString() {
         return "score=" + score + ", student=" + student;

@@ -1,13 +1,10 @@
 package be.intecbrussel.project;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 import java.util.stream.Collectors;
 
 
-public class ScoreInfoService extends Person{
+public class ScoreInfoService {
 
     private List<ScoreInfo> scoreData= new ArrayList<>();
     long numberOfStudents;
@@ -17,7 +14,8 @@ public class ScoreInfoService extends Person{
     public void addScoreInfo(ScoreInfo newScore) {
         scoreData.add(newScore);
         scoreData.stream()
-                //.map(Person::getName())
+                //.map(e-> e.getStudent())
+                .map(ScoreInfo::getStudent)// beter en veilliger
                 .forEach(e -> System.out.println(e));
 
     }
@@ -41,7 +39,7 @@ public class ScoreInfoService extends Person{
     private String[] getFailingStudents(){
         return scoreData.stream()
                 .filter(s-> s.getScore() < 60)
-                .map(s->s.student.getName().toString())
+                .map(s->s.student.getName())
                 .toArray(String[]::new);
     }
 
@@ -54,14 +52,15 @@ public class ScoreInfoService extends Person{
 
     public void getDataSortedByLastName(){
         scoreData.stream()
-                .map(e -> e.student)
-                .forEach(e -> System.out.println(e));
+                .map(ScoreInfo::getStudent)
+                .sorted(Comparator.comparing(Person::getLastName))
+                .forEach(System.out::println);
     }
 
     public void getDataSortedByScore(){
         scoreData.stream()
-                .map(e -> e.score)
-                .forEach(e -> System.out.println(e));
+                .sorted(Comparator.comparing(ScoreInfo::getScore))
+                .forEach(System.out::println);
     }
 
     public ScoreInfo[] getScoreData() {
@@ -73,10 +72,10 @@ public class ScoreInfoService extends Person{
         return numberOfStudents;
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
-    }
+//    @Override
+//    public String getName() {
+//        return super(name);
+//    }
 
     @Override
     public String toString() {
